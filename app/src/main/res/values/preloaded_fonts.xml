@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/abril_fatface</item>
+        <item>@font/advent_pro_thin</item>
+        <item>@font/alatsi</item>
+        <item>@font/allerta_stencil</item>
+        <item>@font/arbutus_slab</item>
+        <item>@font/galada</item>
+    </array>
+</resources>
