@@ -16,4 +16,6 @@
     
     <color name="green">#86B32D	</color>
     <color name="pink">#992667</color>
+
+    <color name="backgroundColor">#3BF5F5F5</color>
 </resources>

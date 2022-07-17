@@ -6,22 +6,9 @@
     app:startDestination="@id/splashScreen">
 
     <fragment
-        android:id="@+id/splashScreen"
-        android:name="com.example.foodrecipe.screens.SplashScreen"
-        android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
-        <action
-            android:id="@+id/action_splashScreen_to_homeScreen"
-            app:destination="@id/homeScreen"
-            app:launchSingleTop="false"
-            app:popUpTo="@id/splashScreen"
-            app:popUpToInclusive="true" />
-    </fragment>
-
-    <fragment
         android:id="@+id/homeScreen"
-        android:name="com.example.foodrecipe.screens.HomeScreen"
-        android:label="HomeScreen" >
+        android:name="com.example.foodrecipe.view.screens.HomeScreen"
+        android:label="HomeScreen">
         <action
             android:id="@+id/action_homeScreen_to_detailScreen"
             app:destination="@id/detailScreen" />
@@ -29,8 +16,26 @@
 
     <fragment
         android:id="@+id/detailScreen"
-        android:name="com.example.foodrecipe.screens.DetailScreen"
+        android:name="com.example.foodrecipe.view.screens.DetailScreen"
         android:label="fragment_detail_screen"
-        tools:layout="@layout/fragment_detail_screen" >
+        tools:layout="@layout/fragment_detail_screen">
+
+        <argument
+            android:name="meal"
+            app:argType="com.example.foodrecipe.model.entities.MealsEntity"/>
+
     </fragment>
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.example.foodrecipe.view.screens.SplashScreen"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash">
+        <action
+            android:id="@+id/action_splashScreen_to_homeScreen2"
+            app:destination="@id/homeScreen"
+            app:popUpTo="@id/splashScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+
 </navigation>

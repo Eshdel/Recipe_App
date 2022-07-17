@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/activity_main.xml" value="0.2941427960666952" />
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/content_main.xml" value="0.2941427960666952" />
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/fragment_home.xml" value="0.18" />
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/fragment_splash.xml" value="0.30183839247541683" />
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/ingredience_item.xml" value="0.23257802479692177" />
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/item_sub_category.xml" value="0.2911500641299701" />
+        <entry key="..\:/EshdelAnroidApps/Recipe_App/app/src/main/res/layout/loading_screen.xml" value="0.25" />
         <entry key="..\:/EshdelAnroidApps/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.291" />
         <entry key="..\:/EshdelAnroidApps/app/src/main/res/drawable/button_background.xml" value="0.291" />
         <entry key="..\:/EshdelAnroidApps/app/src/main/res/drawable/ic_favorite_empty.xml" value="0.3515" />

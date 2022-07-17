@@ -14,18 +14,18 @@ data class MealsItems(
     @ColumnInfo(name = "idMeal")
     @Expose
     @SerializedName("idMeal")
-    val idMeal: String,
+    val idMeal: String?,
 
     @ColumnInfo(name = "categoryName")
-    val categoryName: String,
+    var categoryName: String?,
 
     @ColumnInfo(name = "strmeal")
     @Expose
     @SerializedName("strMeal")
-    val strMeal: String,
+    val strMeal: String?,
 
     @ColumnInfo(name = "strmealthumb")
     @Expose
     @SerializedName("strMealThumb")
-    val strMealThumb: String
+    val strMealThumb: String?
 )

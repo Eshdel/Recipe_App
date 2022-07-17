@@ -1,12 +1,16 @@
 package com.example.foodrecipe.viewmodel
 
+import android.os.Debug
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodrecipe.model.Ingredient
 import com.example.foodrecipe.model.Instruction
-import com.example.foodrecipe.model.entities.MealResponse
+import com.example.foodrecipe.model.entities.MealsEntity
+import com.example.foodrecipe.model.repostitory.meals.MealsRepository
+import kotlinx.coroutines.delay
 
-class DetailScreenViewModel(meal:MealResponse):ViewModel() {
+class DetailScreenViewModel(val meal: MealsEntity,private val mealsRepository: MealsRepository): ViewModel() {
 
     private val _ingredients = MutableLiveData<List<Ingredient>>()
 
@@ -17,8 +21,7 @@ class DetailScreenViewModel(meal:MealResponse):ViewModel() {
     val instructions get() = _instructions
 
     init {
-
-        _ingredients.value = meal.mealsEntity.first().let {
+        _ingredients.value = meal.let {
             listOf (
                 Ingredient(1,it.stringredient1,it.strmeasure1),
                 Ingredient(2,it.stringredient2,it.strmeasure2),
@@ -40,17 +43,21 @@ class DetailScreenViewModel(meal:MealResponse):ViewModel() {
                 Ingredient(18,it.stringredient18,it.strmeasure18),
                 Ingredient(19,it.stringredient19,it.strmeasure19),
                 Ingredient(20,it.stringredient20,it.strmeasure20)
-            )}
-            .filter{it.name?.isNotBlank() ?: false}
+            )}.filter{it.name?.isNotBlank() ?: false}
 
-        _instructions.value = meal.mealsEntity.first().strinstructions.split("\n").let{
+        _instructions.value = meal.strinstructions?.split("\n").let{
             var id = 0
 
-            it.forEach(){
+            it?.forEach(){
                 if (it.trim().isNotBlank())
                     _instructions.value!!.add(Instruction(++id,it))
             }
 
             _instructions.value }
+    }
+
+    override fun onCleared() {
+        mealsRepository.setCurrentMeal(null)
+        super.onCleared()
     }
 }

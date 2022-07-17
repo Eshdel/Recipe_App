@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <ScrollView
+
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:scrollbars="none"
     android:background="@color/gray">
 <androidx.constraintlayout.widget.ConstraintLayout
-
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        tools:context=".screens.HomeScreen"
+        tools:context=".view.screens.HomeScreen"
         android:background="@color/gray">
+
+
 
     <TextView
         android:id="@+id/textview_second"
@@ -73,13 +87,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sub_category_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="8dp"
+        android:background="@color/gray"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/category_name_text_view"
         tools:itemCount="1"
         tools:layout_editor_absoluteX="16dp"
-        tools:listitem="@layout/item_sub_category"
-        android:background="@color/gray"/>
+        tools:listitem="@layout/item_sub_category" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
+
+</LinearLayout>
