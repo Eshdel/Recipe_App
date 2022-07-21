@@ -12,7 +12,7 @@ import com.example.foodrecipe.model.entities.Recipes
 @Dao
 interface RecipeDao {
 
-    @Query("SELECT * FROM categoryitems ORDER BY id DESC")
+    @Query("SELECT * FROM categoryitems ORDER BY strcategory")
     suspend fun getAllCategory() : List<CategoryItems>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
