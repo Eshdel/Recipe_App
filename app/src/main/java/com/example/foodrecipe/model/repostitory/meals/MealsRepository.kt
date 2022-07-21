@@ -3,12 +3,14 @@ package com.example.foodrecipe.model.repostitory.meals
 import com.example.foodrecipe.model.entities.CategoryItems
 import com.example.foodrecipe.model.entities.MealsEntity
 import com.example.foodrecipe.model.entities.MealsItems
+import com.example.foodrecipe.model.entities.Recipes
 import kotlinx.coroutines.flow.Flow
-
 
 interface MealsRepository {
 
     suspend fun setCurrentMeals(category: CategoryItems?)
+
+    suspend fun reloadMeals(category: CategoryItems)
 
     suspend fun setCurrentMeals(category: CategoryItems?, filterString: String?)
 
@@ -18,17 +20,17 @@ interface MealsRepository {
 
     suspend fun setCurrentMeals(filterString: String?)
 
-    suspend fun setAvailableCurrentMeals(availableMeals:List<MealsEntity>)
+    suspend fun getAvaliableMealList(availableMeals:List<Recipes>,category: CategoryItems?):List<MealsItems>
 
-    suspend fun setCurrentMeal(id:Int)
+    suspend fun setCurrentRecipe(id:Int)
 
-    fun getCurrentMeal():MealsEntity?
+    fun getCurrentRecipe(): Recipes?
 
-    fun setCurrentMeal(meal: MealsEntity?)
+    fun setCurrentRecipe(recipe: Recipes?)
 
     fun listenCurrentMeals(): Flow<List<MealsItems>>
 
-    fun listenCurrentMeal(): Flow<MealsEntity?>
+    fun listenCurrentRecipe(): Flow<Recipes?>
 
 }
 

@@ -16,9 +16,6 @@ class SplashScreenViewModel(categoryRepository: CategoriesRepository,mealsReposi
             mealsRepository.setCurrentMeals(categoryRepository.getCategories()).collect{
                 _loadingProgress.postValue(it)
             }
-
-            categoryRepository.setCurrentCategory(categoryRepository.getCategories().first())
         }
-
     }
 }

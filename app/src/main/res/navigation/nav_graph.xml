@@ -10,8 +10,8 @@
         android:name="com.example.foodrecipe.view.screens.HomeScreen"
         android:label="HomeScreen">
         <action
-            android:id="@+id/action_homeScreen_to_detailScreen"
-            app:destination="@id/detailScreen" />
+            android:id="@+id/action_homeScreen_to_loadingScreen"
+            app:destination="@id/loadingScreen" />
     </fragment>
 
     <fragment
@@ -19,11 +19,9 @@
         android:name="com.example.foodrecipe.view.screens.DetailScreen"
         android:label="fragment_detail_screen"
         tools:layout="@layout/fragment_detail_screen">
-
         <argument
             android:name="meal"
-            app:argType="com.example.foodrecipe.model.entities.MealsEntity"/>
-
+            app:argType="com.example.foodrecipe.model.entities.MealsEntity" />
     </fragment>
 
     <fragment
@@ -36,6 +34,21 @@
             app:destination="@id/homeScreen"
             app:popUpTo="@id/splashScreen"
             app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loadingScreen"
+        android:name="com.example.foodrecipe.view.screens.LoadingScreen"
+        android:label="LoadingScreen" >
+        <action
+            android:id="@+id/action_loadingScreen_to_detailScreen"
+            app:destination="@id/detailScreen"
+            app:popUpTo="@id/homeScreen"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="meal"
+            app:argType="com.example.foodrecipe.model.entities.MealsEntity"
+            app:nullable="true"/>
     </fragment>
 
 </navigation>

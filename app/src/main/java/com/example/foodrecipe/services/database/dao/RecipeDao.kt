@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.foodrecipe.model.entities.CategoryItems
 import com.example.foodrecipe.model.entities.MealsItems
+import com.example.foodrecipe.model.entities.Recipes
 
 
 @Dao
@@ -23,7 +24,7 @@ interface RecipeDao {
     @Query("SELECT * FROM MealItems WHERE categoryName =:categoryName  ORDER BY id DESC")
     suspend fun getSpecificMealList(categoryName:String) : List<MealsItems>
 
-    @Query("SELECT * FROM MealItems ORDER BY id DESC")
+    @Query("SELECT * FROM MealItems ORDER BY strmeal")
     suspend fun getSpecificMealList(): List<MealsItems>
 
     @Query("DELETE FROM mealitems")
@@ -35,9 +36,12 @@ interface RecipeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMeal(mealsItems: MealsItems?)
 
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun insertMealEntity(mealsEntity: MealsEntity)
-//
-//    @Query("SELECT * FROM mealsentities where idMeal =:id")
-//    suspend fun getMeal(id:String): List<MealsEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertRecipe(recipe: Recipes)
+
+    @Query("SELECT * FROM recipes where dish_id = :id")
+    suspend fun getRecipe(id:String): Recipes?
+
+    @Query("SELECT * FROM recipes")
+    suspend fun getRecipes():List<Recipes>?
 }

@@ -1,6 +1,7 @@
 package com.example.foodrecipe.model.repostitory.categories
 
 import android.content.Context
+import android.util.Log
 import com.example.foodrecipe.services.database.dao.RecipeDao
 import com.example.foodrecipe.services.database.RecipeDatabase
 import com.example.foodrecipe.model.entities.CategoryItems
@@ -13,6 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.withContext
 import retrofit2.awaitResponse
+import java.lang.NullPointerException
+import kotlin.math.log
 
 object InMemoryCategoriesRepository : CategoriesRepository {
 
@@ -24,21 +27,24 @@ object InMemoryCategoriesRepository : CategoriesRepository {
 
     private var currentCategory:CategoryItems? = null
 
-    private val currentCategoryFlow = MutableSharedFlow<CategoryItems?>(replay = 1, extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val currentCategoryFlow = MutableSharedFlow<CategoryItems?>(replay = 0, extraBufferCapacity = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     private suspend fun getCategoriesFromServer():List<CategoryItems> {
+            try {
             recipeApiService.getCategoryList().awaitResponse().body().let {
-                if (it == null || it.categorieitems.isNullOrEmpty()){
-                    return getCategoriesFromDatabase()
-                }
-
-                categories = it.categorieitems!!
+                categories = it!!.categorieitems!!
                 insertCategoriesIntoDatabase(categories)
-                return categories
+                return categories }
             }
+
+            catch (e:Exception) {
+                return getCategoriesFromDatabase()
+            }
+
     }
 
     private suspend fun getCategoriesFromDatabase():List<CategoryItems> {
+
         dao.getAllCategory().let {
             categories = it
             return categories

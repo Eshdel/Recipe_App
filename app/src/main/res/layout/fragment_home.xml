@@ -6,16 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
-
-    <include
-        android:id="@+id/loading"
-        layout="@layout/loading_screen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
-
     <ScrollView
-
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:scrollbars="none"
@@ -28,6 +19,31 @@
         android:background="@color/gray">
 
 
+    <ImageButton
+        android:id="@+id/sync_data_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/search_view"
+        app:layout_constraintEnd_toEndOf="@+id/search_view"
+        app:layout_constraintTop_toTopOf="@+id/textview_second"
+        app:srcCompat="@drawable/ic_baseline_sync_24"
+        app:tint="@color/yellow" />
+
+    <Button
+        android:id="@+id/unselect_category"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:fontFamily="@font/alatsi"
+        android:text="unselect category"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/sub_category_recycler_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_category_recycler_view" />
 
     <TextView
         android:id="@+id/textview_second"
@@ -78,7 +94,7 @@
         android:layout_marginTop="8dp"
         android:fontFamily="@font/alatsi"
         android:paddingStart="@dimen/_10sdp"
-        android:text="Category name"
+        android:text="All"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +110,32 @@
         app:layout_constraintTop_toBottomOf="@+id/category_name_text_view"
         tools:itemCount="1"
         tools:layout_editor_absoluteX="16dp"
-        tools:listitem="@layout/item_sub_category" />
+        tools:listitem="@layout/item_sub_category" >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageView
+        android:id="@+id/no_data_image"
+        android:layout_width="@dimen/_128sdp"
+        android:layout_height="@dimen/_128sdp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sub_category_recycler_view"
+        app:layout_constraintStart_toStartOf="@+id/sub_category_recycler_view"
+        app:layout_constraintTop_toTopOf="@+id/sub_category_recycler_view"
+        app:srcCompat="@drawable/wifi_off_48px"
+        app:tint="@color/yellow" />
+
+    <Button
+        android:id="@+id/try_again_load_data_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Try again!"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/no_data_image"
+        app:layout_constraintStart_toStartOf="@+id/no_data_image"
+        app:layout_constraintTop_toBottomOf="@+id/no_data_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

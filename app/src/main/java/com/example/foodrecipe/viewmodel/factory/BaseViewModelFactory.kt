@@ -5,7 +5,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.foodrecipe.App
+import com.example.foodrecipe.view.screens.LoadingScreen
 import com.example.foodrecipe.viewmodel.HomeScreenViewModel
+import com.example.foodrecipe.viewmodel.LoadingScreenViewModel
 import com.example.foodrecipe.viewmodel.SplashScreenViewModel
 
 typealias ViewModelCreator = (App) -> ViewModel?
@@ -15,7 +17,7 @@ class BaseViewModelFactory(private val app:App,  private val viewModelCreator: V
         val viewModel = when(modelClass) {
             SplashScreenViewModel::class.java -> SplashScreenViewModel(app.categoryRepository,app.mealsRepository)
             HomeScreenViewModel::class.java -> HomeScreenViewModel(app.categoryRepository,app.mealsRepository)
-
+            LoadingScreenViewModel::class.java -> LoadingScreenViewModel(app.mealsRepository)
             else -> viewModelCreator(app) ?: throw IllegalArgumentException("Unknown ViewModel class")
         }
 

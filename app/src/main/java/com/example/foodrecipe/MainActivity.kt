@@ -32,8 +32,12 @@ class MainActivity : AppCompatActivity(), Navigator {
         navController.navigate(R.id.action_splashScreen_to_homeScreen2)
     }
 
-    override fun goDetailScreen(meal:MealsEntity) {
-       navController.navigate(R.id.action_homeScreen_to_detailScreen, bundleOf("meal" to meal))
+    override fun goDetailScreen(meal: MealsEntity) {
+        navController.navigate(R.id.action_loadingScreen_to_detailScreen, bundleOf("meal" to meal))
+    }
+
+    override fun goLoadingScreen(meal:MealsEntity?) {
+       navController.navigate(R.id.action_homeScreen_to_loadingScreen, bundleOf("meal" to meal))
     }
 
     override fun goBack() {

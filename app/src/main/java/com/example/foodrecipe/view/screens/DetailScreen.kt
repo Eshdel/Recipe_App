@@ -28,23 +28,29 @@ class DetailScreen: BaseFragment() {
 
     private val binding get() = _binding!!
 
-    lateinit var ingredientsAdapter: IngredientsAdapter
+    private lateinit var mealsEntity:MealsEntity
 
-    lateinit var instructionAdapter: InstructionAdapter
+    private lateinit var ingredientsAdapter: IngredientsAdapter
+
+    private lateinit var instructionAdapter: InstructionAdapter
 
     val viewModel:DetailScreenViewModel by viewModels {
         DetailScreenViewModelFactory(arguments?.getParcelable("meal")!!,requireContext().applicationContext as App)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
+
+        mealsEntity = arguments?.getParcelable("meal")!!
+
+        if (mealsEntity == null){
+            navigator.goBack()
+            return
+        }
 
         ingredientsAdapter = IngredientsAdapter(viewModel.ingredience.value!!, getColorsPreset(requireContext()))
 
-        instructionAdapter = InstructionAdapter(viewModel.instructions.value!!,
-
-            getColorsPreset(requireContext()))
+        instructionAdapter = InstructionAdapter(viewModel.instructions.value!!, getColorsPreset(requireContext()))
     }
 
     override fun onCreateView(
@@ -54,20 +60,22 @@ class DetailScreen: BaseFragment() {
 
         _binding = FragmentDetailScreenBinding.inflate(inflater,container,false)
 
-        binding.ingredientsRecyclerView.adapter = ingredientsAdapter
-        binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
+        if (mealsEntity != null){
+            binding.ingredientsRecyclerView.adapter = ingredientsAdapter
+            binding.ingredientsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
-        binding.instructionsRecyclerView.adapter = instructionAdapter
-        binding.instructionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
+            binding.instructionsRecyclerView.adapter = instructionAdapter
+            binding.instructionsRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL,false)
 
-        binding.categoryNameTextView.text = viewModel.meal.strmeal
+            binding.categoryNameTextView.text = viewModel.meal?.strmeal
 
-        binding.goBack.setOnClickListener {navigator.goBack() }
+            binding.goBack.setOnClickListener {navigator.goBack() }
 
-        Glide.with(requireContext()).load(viewModel.meal.strmealthumb).into(binding.imageItem)
+            Glide.with(requireContext()).load(viewModel.meal?.strmealthumb).into(binding.imageItem)
 
-        binding.searchYoutube.setOnClickListener {
-            navigator.openYoutubeVideo(Uri.parse(viewModel.meal.stryoutube))
+            binding.searchYoutube.setOnClickListener {
+                navigator.openYoutubeVideo(Uri.parse(viewModel.meal?.stryoutube))
+            }
         }
 
         return binding.root

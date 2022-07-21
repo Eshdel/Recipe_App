@@ -12,6 +12,7 @@ import com.example.foodrecipe.model.repostitory.meals.MealsRepository
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.launch
+import java.lang.NullPointerException
 
 
 class HomeScreenViewModel(categoryRepository: CategoriesRepository, mealsRepository: MealsRepository): BaseViewModel(categoryRepository, mealsRepository) {
@@ -32,12 +33,11 @@ class HomeScreenViewModel(categoryRepository: CategoriesRepository, mealsReposit
 
     val currentCategories:LiveData<List<CategoryItems>?> get() = _currentCategories
 
-    private val _currentMeal = MutableLiveData<MealsEntity>()
+    private val _currentMeal = MutableLiveData<MealsEntity?>()
 
     val currentMeal:LiveData<MealsEntity?> get() = _currentMeal
 
     init {
-        Log.e("vm","Start")
         viewModelScope.launch {
             _currentCategories.postValue(categoryRepository.getCategories())
         }
@@ -49,6 +49,9 @@ class HomeScreenViewModel(categoryRepository: CategoriesRepository, mealsReposit
         viewModelScope.launch {
             mealsRepository.listenCurrentMeals().collect {
                 _currentMealsList.postValue(it)
+                for(el in it) {
+                    Log.e("List", el.strMeal.toString())
+                }
             }
         }
 
@@ -60,8 +63,13 @@ class HomeScreenViewModel(categoryRepository: CategoriesRepository, mealsReposit
         }
 
         viewModelScope.launch {
-            mealsRepository.listenCurrentMeal().collect {
-                _currentMeal.value = it
+            mealsRepository.listenCurrentRecipe().collect {
+                if (it != null) {
+                    _currentMeal.value = it.toMealEntity()
+                }
+                else {
+                    _currentMeal.value = null
+                }
             }
         }
 
@@ -78,20 +86,46 @@ class HomeScreenViewModel(categoryRepository: CategoriesRepository, mealsReposit
         categoryRepository.setCurrentCategory(category)
     }
 
+    fun unselectCategory() {
+        viewModelScope.launch{
+            categoryRepository.setCurrentCategory(null)
+            mealsRepository.setCurrentMeals(null,searchString)
+        }
+    }
+
     fun setSearchString(searchString:String?) {
         this.searchStringFlow.tryEmit(searchString)
     }
 
     fun setCurrentMeal(meal:MealsItems) {
         viewModelScope.launch {
-            mealsRepository.setCurrentMeal(meal.idMeal!!.toInt())
+            mealsRepository.setCurrentRecipe(meal.idMeal!!.toInt())
         }
     }
 
+    fun showAllMeals(){
+        viewModelScope.launch {
+            mealsRepository.setCurrentMeals()
+        }
+    }
+    fun syncData(){
+        viewModelScope.launch {
+            _currentCategories.postValue(categoryRepository.getCategories())
+            mealsRepository.setCurrentMeals(categoryRepository.getCategories()).collect{}
+            mealsRepository.setCurrentMeals()
+        }
+    }
 
+    fun syncData(category: CategoryItems?){
+        if (category != null)
+            viewModelScope.launch {
+                mealsRepository.reloadMeals(category)
+            }
+        else
+            syncData()
+    }
 
     override fun onCleared() {
         super.onCleared()
-        Log.e("vm","Clear")
     }
 }

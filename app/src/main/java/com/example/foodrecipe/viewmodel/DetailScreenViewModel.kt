@@ -1,14 +1,11 @@
 package com.example.foodrecipe.viewmodel
 
-import android.os.Debug
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.foodrecipe.model.Ingredient
 import com.example.foodrecipe.model.Instruction
 import com.example.foodrecipe.model.entities.MealsEntity
 import com.example.foodrecipe.model.repostitory.meals.MealsRepository
-import kotlinx.coroutines.delay
 
 class DetailScreenViewModel(val meal: MealsEntity,private val mealsRepository: MealsRepository): ViewModel() {
 
@@ -54,10 +51,11 @@ class DetailScreenViewModel(val meal: MealsEntity,private val mealsRepository: M
             }
 
             _instructions.value }
+
     }
 
     override fun onCleared() {
-        mealsRepository.setCurrentMeal(null)
+        mealsRepository.setCurrentRecipe(null)
         super.onCleared()
     }
 }

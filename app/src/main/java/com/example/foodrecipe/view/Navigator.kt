@@ -8,6 +8,8 @@ interface Navigator {
 
     fun goDetailScreen(meal:MealsEntity)
 
+    fun goLoadingScreen(meal:MealsEntity?)
+
     fun goBack()
 
     fun openYoutubeVideo(uri: Uri)

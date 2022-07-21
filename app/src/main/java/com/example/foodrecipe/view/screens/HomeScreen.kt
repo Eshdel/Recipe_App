@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodrecipe.view.adapter.MainCategoryAdapter
@@ -42,11 +43,8 @@ class HomeScreen: BaseFragment() {
 
         subCategoryAdapter = SubCategoryAdapter(requireContext(), object:SubCategoryAdapter.OnItemClickListener {
             override fun onClicked(meal: MealsItems) {
-                binding.loading.root.visibility = View.VISIBLE
-
                 viewModel.currentMeal.observe(viewLifecycleOwner){
-                    if (it != null)
-                        navigator.goDetailScreen(it)
+                    navigator.goLoadingScreen(it)
                 }
 
                 viewModel.setCurrentMeal(meal)
@@ -73,6 +71,11 @@ class HomeScreen: BaseFragment() {
 
         viewModel.currentCategory.observe(viewLifecycleOwner){
             binding.categoryNameTextView.text = it?.strcategory ?: "All"
+
+            if (binding.categoryNameTextView.text == "All")
+                binding.unselectCategory.visibility = View.INVISIBLE
+            else
+                binding.unselectCategory.visibility = View.VISIBLE
         }
 
         viewModel.currentCategories.observe(viewLifecycleOwner){
@@ -81,9 +84,35 @@ class HomeScreen: BaseFragment() {
 
         viewModel.currentMealsList.observe(viewLifecycleOwner){
             subCategoryAdapter.data = it ?: listOf()
+            if (it.isNullOrEmpty()) {
+                binding.noDataImage.visibility = View.VISIBLE
+                binding.tryAgainLoadDataButton.visibility = View.VISIBLE
+            }
+            else{
+                binding.noDataImage.visibility = View.INVISIBLE
+                binding.tryAgainLoadDataButton.visibility = View.INVISIBLE
+            }
+        }
+
+        binding.unselectCategory.setOnClickListener {
+            viewModel.unselectCategory()
+        }
+
+        binding.tryAgainLoadDataButton.setOnClickListener {
+            viewModel.syncData(viewModel.currentCategory.value)
+        }
+
+        binding.syncDataButton.setOnClickListener {
+            viewModel.syncData()
+            viewModel.unselectCategory()
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.showAllMeals()
     }
 
     override fun onDestroyView() {
