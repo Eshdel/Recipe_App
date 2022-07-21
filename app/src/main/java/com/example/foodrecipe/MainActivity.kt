@@ -3,6 +3,7 @@ package com.example.foodrecipe
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.os.bundleOf
@@ -45,10 +46,16 @@ class MainActivity : AppCompatActivity(), Navigator {
     }
 
     override fun openYoutubeVideo(uri: Uri) {
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        intent.setPackage("com.google.android.youtube")
-        startActivity(intent)
+        try {
+
+            val intent = Intent(Intent.ACTION_VIEW, uri)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setPackage("com.google.android.youtube")
+            startActivity(intent)
+        }
+        catch (e:Exception){
+            Toast.makeText(this,"Sorry, Failed to open video",Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun closeApp() {
