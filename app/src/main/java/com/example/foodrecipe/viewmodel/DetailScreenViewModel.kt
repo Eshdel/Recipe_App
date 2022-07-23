@@ -40,13 +40,13 @@ class DetailScreenViewModel(val meal: MealsEntity,private val mealsRepository: M
                 Ingredient(18,it.stringredient18,it.strmeasure18),
                 Ingredient(19,it.stringredient19,it.strmeasure19),
                 Ingredient(20,it.stringredient20,it.strmeasure20)
-            )}.filter{it.name?.isNotBlank() ?: false}
+            )}.filter{!it.name.isNullOrEmpty() && it.name != "null"}
 
         _instructions.value = meal.strinstructions?.split("\n").let{
             var id = 0
 
             it?.forEach(){
-                if (it.trim().isNotBlank())
+                if (it.trim().isNotBlank()&& it.length > 3)
                     _instructions.value!!.add(Instruction(++id,it))
             }
 
